@@ -61,7 +61,12 @@
           <!-- <a href="#blog" class="nav-item nav-link">Blog</a> -->
           <a href="#contact" class="nav-item nav-link">Contact</a>
         </div>
-        <a href="" class="btn btn-outline-primary d-none d-lg-block">Hire Me</a>
+        <a
+          href="https://www.linkedin.com/in/muhammad-azhar-saeed-06886215b/"
+          target="_blank"
+          class="btn btn-outline-primary d-none d-lg-block"
+          >Hire Me</a
+        >
       </div>
     </nav>
     <!-- Navbar End -->
@@ -140,7 +145,7 @@
                 target="_blank"
                 >Download CV</a
               >
-              <button
+              <!-- <button
                 type="button"
                 class="btn-play"
                 data-toggle="modal"
@@ -153,7 +158,7 @@
                 class="font-weight-normal text-white m-0 ml-4 d-none d-sm-block"
               >
                 Play Video
-              </h5>
+              </h5> -->
             </div>
           </div>
         </div>
@@ -240,8 +245,13 @@
                 </h6>
               </div>
             </div>
-            <a href="" class="btn btn-outline-primary mr-4">Hire Me</a>
-            <a href="" class="btn btn-outline-primary">Learn More</a>
+            <a
+              href="https://www.linkedin.com/in/muhammad-azhar-saeed-06886215b/"
+              class="btn btn-outline-primary mr-4"
+              target="_blank"
+              >Hire Me</a
+            >
+            <a href="#" class="btn btn-outline-primary">Learn More</a>
           </div>
         </div>
       </div>
@@ -987,7 +997,12 @@
           <div class="col-lg-8">
             <div class="contact-form text-center">
               <div id="success"></div>
-              <form name="sentMessage" id="contactForm" novalidate="novalidate">
+              <form
+                name="sentMessage"
+                onsubmit="sendEmail()"
+                id="contactForm"
+                novalidate="novalidate"
+              >
                 <div class="form-row">
                   <div class="control-group col-sm-6">
                     <input
@@ -1121,10 +1136,82 @@
     <script src="lib/lightbox/js/lightbox.min.js"></script>
 
     <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
+    <!-- <script src="mail/jqBootstrapValidation.min.js"></script> -->
+    <!-- <script src="mail/contact.js"></script> -->
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <!-- Email JS Functionality -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
+    <script>
+      function sendEmail() {
+        //emailjs.init("9gytK-bzOmUaIOSae"); // Replace with your EmailJS user ID
+
+        var name = document.getElementById("name").value;
+        var email = document.getElementById("email").value;
+        var subject = document.getElementById("subject").value;
+        var message = document.getElementById("message").value;
+
+        var data = {
+          service_id: "service_ix39fsj",
+          template_id: "template_njzhrgh",
+          user_id: "9gytK-bzOmUaIOSae",
+          template_params: {
+            name,
+            email,
+            subject,
+            message,
+          },
+          accessToken: "_3wY6hvcMTeSGF0Zbja3h",
+        };
+
+        fetch("https://api.emailjs.com/api/v1.0/email/send", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            setTimeout(() => {}, 3000);
+            console.log("Email sent successfully:", result);
+            // Display success message or perform other actions
+            // ...
+            // Reset the form
+            document.getElementById("contactForm").reset();
+          })
+          .catch((error) => {
+            setTimeout(() => {}, 3000);
+            console.error("Failed to send email:", error);
+            // Display error message or perform other actions
+            // ...
+            // Reset the form
+            document.getElementById("contactForm").reset();
+          });
+
+        // emailjs
+        //   .send("service_ix39fsj", "template_njzhrgh", {
+        //     name,
+        //     email,
+        //     subject,
+        //     message,
+        //   })
+        //   .then(
+        //   function (response) {
+        //     console.log("Email sent successfully:", response);
+        //     document.getElementById("name").value = "";
+        //     document.getElementById("email").value = "";
+        //     document.getElementById("subject").value = "";
+        //     document.getElementById("message").value = "";
+        //   },
+        //   function (error) {
+        //     console.log("Failed to send email:", error);
+        //   }
+        // );
+      }
+    </script>
   </body>
 </html>
