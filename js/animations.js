@@ -1,7 +1,4 @@
-import gsap from 'https://esm.sh/gsap@3.12.5';
-import ScrollTrigger from 'https://esm.sh/gsap@3.12.5/ScrollTrigger';
-import { meshes, particlesMesh, camera } from './three-scene.js';
-
+// Using global gsap and ScrollTrigger from CDN
 gsap.registerPlugin(ScrollTrigger);
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -93,8 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
     end: "bottom bottom",
     onUpdate: (self) => {
       // self.progress is between 0 and 1
-      if(meshes[0]) {
-        gsap.to(meshes[0].rotation, {
+      if(window.myMeshes && window.myMeshes[0]) {
+        gsap.to(window.myMeshes[0].rotation, {
           z: self.progress * Math.PI * 2,
           overwrite: "auto",
           duration: 0.5
@@ -102,16 +99,18 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       
       // Move camera slightly
-      gsap.to(camera.position, {
-        y: -self.progress * 20,
-        z: 30 + (self.progress * 10),
-        overwrite: "auto",
-        duration: 0.5
-      });
+      if(window.myCamera) {
+        gsap.to(window.myCamera.position, {
+          y: -self.progress * 20,
+          z: 30 + (self.progress * 10),
+          overwrite: "auto",
+          duration: 0.5
+        });
+      }
       
       // Move particles
-      if(particlesMesh) {
-         gsap.to(particlesMesh.position, {
+      if(window.myParticlesMesh) {
+         gsap.to(window.myParticlesMesh.position, {
            y: self.progress * 10,
            overwrite: "auto",
            duration: 0.5
@@ -126,8 +125,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const isLight = document.documentElement.getAttribute('data-theme') === 'light';
     
     // Change mesh color based on theme
-    if(meshes[0]) {
-      gsap.to(meshes[0].material.color, {
+    if(window.myMeshes && window.myMeshes[0]) {
+      gsap.to(window.myMeshes[0].material.color, {
         r: isLight ? 0.31 : 0.38, // approx #4f46e5 vs #6366f1
         g: isLight ? 0.27 : 0.40,
         b: isLight ? 0.90 : 0.94,

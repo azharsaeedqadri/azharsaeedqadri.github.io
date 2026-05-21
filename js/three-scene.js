@@ -1,8 +1,7 @@
-import * as THREE from 'https://esm.sh/three@0.160.0';
-
-export const scene = new THREE.Scene();
-export const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-export const renderer = new THREE.WebGLRenderer({
+// Using global THREE from CDN
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector('#bg-canvas'),
   alpha: true,
   antialias: true
@@ -15,7 +14,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.z = 30;
 
 // Add Objects
-export const meshes = [];
+window.myMeshes = [];
 
 // Main Abstract Shape
 const geometry = new THREE.IcosahedronGeometry(10, 1);
@@ -30,7 +29,7 @@ const material = new THREE.MeshPhysicalMaterial({
 
 const mainMesh = new THREE.Mesh(geometry, material);
 scene.add(mainMesh);
-meshes.push(mainMesh);
+window.myMeshes.push(mainMesh);
 
 // Add small floating particles
 const particlesGeometry = new THREE.BufferGeometry();
@@ -47,8 +46,8 @@ const particlesMaterial = new THREE.PointsMaterial({
   transparent: true,
   opacity: 0.8,
 });
-export const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-scene.add(particlesMesh);
+window.myParticlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+scene.add(window.myParticlesMesh);
 
 // Lights
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -89,7 +88,7 @@ function animate() {
   mainMesh.rotation.y += 0.05 * (targetX - mainMesh.rotation.y);
   mainMesh.rotation.x += 0.05 * (targetY - mainMesh.rotation.x);
 
-  particlesMesh.rotation.y = -elapsedTime * 0.05;
+  window.myParticlesMesh.rotation.y = -elapsedTime * 0.05;
 
   renderer.render(scene, camera);
 }
@@ -101,4 +100,5 @@ window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-});
+// Expose camera to global scope for GSAP
+window.myCamera = camera;
