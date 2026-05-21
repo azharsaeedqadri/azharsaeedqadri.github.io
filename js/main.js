@@ -1,11 +1,11 @@
 // Main JavaScript logic: Theme toggle, Mobile Menu, Typing effect, EmailJS
 
 document.addEventListener('DOMContentLoaded', () => {
-  
+
   // Theme Toggle
   const themeToggle = document.getElementById('theme-toggle');
   const icon = themeToggle.querySelector('i');
-  
+
   // Check local storage for theme
   const currentTheme = localStorage.getItem('theme') || 'dark';
   if (currentTheme === 'light') {
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Mobile Menu Toggle
   const menuBtn = document.getElementById('menu-btn');
   const navLinks = document.getElementById('nav-links');
-  
+
   menuBtn.addEventListener('click', () => {
     navLinks.classList.toggle('active');
   });
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Email JS Function
 function sendEmail(e) {
   e.preventDefault();
-  
+
   const statusEl = document.getElementById("form-status");
   statusEl.textContent = "Sending...";
   statusEl.style.color = "var(--text-secondary)";
@@ -103,16 +103,16 @@ function sendEmail(e) {
   var message = document.getElementById("message").value;
 
   var data = {
-    service_id: "service_ix39fsj",
+    service_id: "service_dohfibg",
     template_id: "template_njzhrgh",
-    user_id: "9gytK-bzOmUaIOSae",
+    user_id: "DYSzrrNZ4yTkkU7-w",
     template_params: {
       name,
       email,
       subject,
       message,
     },
-    accessToken: "_3wY6hvcMTeSGF0Zbja3h",
+    accessToken: "DQe7yjtx19jfnlZCa_JG6",
   };
 
   fetch("https://api.emailjs.com/api/v1.0/email/send", {
